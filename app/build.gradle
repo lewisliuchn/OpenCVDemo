@@ -12,9 +12,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags ""
-                cppFlags "-frtti -fexceptions"
-                abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+                arguments "-DANDROID_ARM_NEON=TRUE","-DCMAKE_BUILD_TYPE=Release","-DANDROID_TOOLCHAIN=clang"
+                cppFlags "-std=c++14 -frtti -fexceptions -ljnigraphics"
+                // ndk编译生成so库
+                ndk{
+                    abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+                }
+
                 arguments "-DOpenCV_DIR=" + opencvsdk + "/sdk/native"
 
             }
